@@ -1,4 +1,4 @@
-# 13 Object-Relational Mapping (ORM): 'theStellar.eComm$ite'
+# 13 Object-Relational Mapping (ORM): 'theStellar.eCommApp'
 
 ## Your Task: use post man to test all routes 
 
