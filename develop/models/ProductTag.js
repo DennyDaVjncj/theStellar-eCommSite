@@ -13,19 +13,19 @@ ProductTag.init(
       primaryKey:true,
       autoIncrement:true
     },
-    productId:{
+    product_id:{
       type:DataTypes.INTEGER,
       references:{
         model:'product',
         key:'id'
-      }
+      }//foreign key
     },
-    tagId:{
+    tag_id:{
       type:DataTypes.INTEGER,
-      references:{//foreign key
+      references:{
         model:'tag',
         key:'id'
-      }
+      }//foreign key
     }
   },
   {
@@ -33,7 +33,7 @@ ProductTag.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'product_tag',
+    modelName: 'productTag',
   }
 );
 
