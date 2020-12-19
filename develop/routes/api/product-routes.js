@@ -7,13 +7,19 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', async(wish, gift) => {  
   try{
-    console.log(wish);
     const inventory=await Product.findAll({
-      include:[{Category,Tag}]
+      include:[
+        Category,
+        {
+          model:Tag,
+          through:Product
+        }
+      ]
     });
     gift.json(inventory);
-  }catch(sin){
-    gift.json(sin);
+  }catch(shrink){
+    console.error(shrink)
+    gift.status(500).json(shrink);
   };//tentative
 
   // be sure to include its associated Category and Tag data
@@ -24,7 +30,12 @@ router.get('/:id', async (wish, gift) => {
   // find a single product by its `id`
   try{
     const inventory=await Product.findByPk(wish.params.id,{
-      include:[{model:Category,Tag}]
+      include:[Category,
+        {
+          model:Tag,
+          through:ProductTag
+        }
+      ]
     });
     if(!inventory){
       gift.status(404).json({message:'supply chain needs improving!'});
