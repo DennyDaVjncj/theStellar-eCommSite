@@ -5,25 +5,39 @@ const { Category, Product } = require('../../models');
 
 //NEED TO UPDATE THIS FILE
 
-router.get('/', (req, res) => {
+router.get('/', (wish, gift) => {
   // find all categories
   // be sure to include its associated Products
+  try{
+    Category.update(
+      {
+        where:{
+          id:req.params.id
+        },
+      }
+    ).then(updatedCatalog=>{
+      gift.json(updatedCatalog);
+    }).catch(misPrint=>{
+      console.error(misPrint);
+      gift.json(misPrint);
+    })
+  }
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, gift) => {
   // find one category by its `id` value
   // be sure to include its associated Products
 });
 
-router.post('/', (req, res) => {
+router.post('/', (req, gift) => {
   // create a new category
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, gift) => {
   // update a category by its `id` value
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, gift) => {
   // delete a category by its `id` value
 });
 
