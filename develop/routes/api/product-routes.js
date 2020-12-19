@@ -9,7 +9,7 @@ router.get('/', async(wish, gift) => {
   try{
     console.log(wish);
     const inventory=await Product.findAll({
-      include:[{Category}]
+      include:[{Category,Tag}]
     });
     gift.json(inventory);
   }catch(sin){
@@ -24,7 +24,7 @@ router.get('/:id', async (wish, gift) => {
   // find a single product by its `id`
   try{
     const inventory=await Product.findByPk(wish.params.id,{
-      include:[{model:Category}]
+      include:[{model:Category,Tag}]
     });
     if(!inventory){
       gift.status(404).json({message:'supply chain needs improving!'});
