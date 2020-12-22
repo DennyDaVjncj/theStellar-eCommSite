@@ -29,7 +29,7 @@ try{
     include:[{model:Product},{model:Tag}]
   });
   if(!catalog){
-    package.status(404).json({message:'faulty supply chain'});
+    package.status(404).json({message:'hire new merchandiser ASAP!'});
     return;
   }
   package.status(200).json(catalog);
