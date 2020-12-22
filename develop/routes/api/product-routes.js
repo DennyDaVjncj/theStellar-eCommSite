@@ -49,7 +49,7 @@ router.get('/:id', async (wish, gift) => {
 });
 
 // create new product
-router.post('/', (wish, gift) => {
+router.post('/', (wish, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -71,7 +71,7 @@ router.post('/', (wish, gift) => {
         return ProductTag.bulkCreate(productTagIdArr);
       }
       // if no product tags, just respond
-      res.status(200).json(product);
+      res.status(200).json(productTagIds);
     })
     .then((productTagIds) => res.status(200).json(productTagIds))
     .catch((err) => {
