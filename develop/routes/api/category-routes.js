@@ -43,7 +43,7 @@ router.get('/:id', async(order,package) => {
   // be sure to include its associated Products
     try{
       const catalog=await Category.findByPk(order.params.id,{
-        include:[{model:Product}],
+        include:[Product,ProductTag],
       });
       console.log(order);
       if(!catalog){
