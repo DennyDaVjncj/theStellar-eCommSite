@@ -1,6 +1,8 @@
 # 13 Object-Relational Mapping (ORM): 'theStellar.eCommApp' - https://youtu.be/b-KDC7O4kII
 
-## Your Task: use post man to test all routes 
+## Your Task: use post man to test all routes: 
+
+![image](https://user-images.githubusercontent.com/62162419/103044431-70f80480-454e-11eb-82ab-f3c76debd2bd.png)
 
 Internet retail, also known as **e-commerce**, is the largest sector of the electronics industry, generating an estimated $29 trillion in 2019. E-commerce platforms like Shopify and WooCommerce provide a suite of services to businesses of all sizes. Due to their prevalence, understanding the fundamental architecture of these platforms will benefit you as a full-stack web developer.
 
