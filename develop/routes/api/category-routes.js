@@ -1,29 +1,7 @@
 const router = require('express').Router();
 const { Category, Product, Tag, ProductTag } = require('../../models');
 
-// The `/api/categories` endpoint
-
-//NEED TO UPDATE THIS FILE
-
-router.get('/', async(order, package) => {
-  // find all categories
-  // be sure to include its associated Products
-//   try{
-//     const catalog=await Category.findAll({
-//       include:[
-//       Category,
-//       {
-//         model:Product,
-//         through:ProductTag
-//       }
-//     ] 
-//   });
-//   package.json(catalog);
-// }catch(shrink){
-//   console.error(shrink);
-//   package.status(500).json(shrink);
-// }
-// });
+router.get('/', async(order, package)=>{
 try{
   const catalog=await Category.findAll(order.params.id,{
     include:[{model:Product},{model:Tag}]
@@ -39,8 +17,6 @@ try{
 });
 
 router.get('/:id', async(order,package) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
     try{
       const catalog=await Category.findByPk(order.params.id,{
         include:[Product],
@@ -54,10 +30,9 @@ router.get('/:id', async(order,package) => {
     }catch(shrink){
       package.status(500).json(shrink.message);
     }
-});
+});//not eveyting is ideal with our 'orders', but they're at the least clocking in for work
 
-router.post('/', async (order, package) => {
-  // create a new category
+router.post('/', async (order, package) => {  
   try{
     const newCatalog=await Category.create(order.body);
     console.log(newCatalog);
@@ -65,10 +40,9 @@ router.post('/', async (order, package) => {
   }catch(shrink){
     package.status(400).json(shrink);
   }
-});
+});//additional content needed within body of postman
 
 router.put('/:id', (order, package) => {
-  // update a category by its `id` value
   try{
     Category.update(order.body,{
         where:{
@@ -85,7 +59,7 @@ router.put('/:id', (order, package) => {
 });
 
 router.delete('/:id', async(order,package) => {
-  try{// delete a category by its `id` value
+  try{
   const catalog=await Category.destroy({
     where:{
       id:order.params.id,
