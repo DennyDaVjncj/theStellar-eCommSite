@@ -1,10 +1,6 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
-// The `/api/products` endpoint
-// const endpoint=require('/routes');
-
-// get all products
 router.get('/', async(wish, gift) => {  
   try{
     const inventory=await Product.findAll({
@@ -21,13 +17,9 @@ router.get('/', async(wish, gift) => {
     console.error(shrink)
     gift.status(500).json(shrink);
   };//tentative
-
-  // be sure to include its associated Category and Tag data
 });
 
-// get one product
 router.get('/:id', async (wish, gift) => {
-  // find a single product by its `id`
   try{
     const inventory=await Product.findByPk(wish.params.id,{
       include:[Category,
@@ -45,10 +37,8 @@ router.get('/:id', async (wish, gift) => {
   }catch(corporateScandal){
     gift.status(500).json(corporateScandal);
   }
-  // be sure to include its associated Category and Tag data
 });
 
-// create new product
 router.post('/', (wish, res) => {
   /* req.body should look like this...
     {
@@ -60,7 +50,6 @@ router.post('/', (wish, res) => {
   */
   Product.create(wish.body)
     .then((product) => {
-      // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (wish.body.tagIds.length) {
         const productTagIdArr = wish.body.tagIds.map((tag_id) => {
           return {
@@ -70,7 +59,6 @@ router.post('/', (wish, res) => {
         });
         return ProductTag.bulkCreate(productTagIdArr);
       }
-      // if no product tags, just respond
       res.status(200).json(productTagIds);
     })
     .then((productTagIds) => res.status(200).json(productTagIds))
@@ -80,22 +68,17 @@ router.post('/', (wish, res) => {
     });
 });
 
-// update product
 router.put('/:id', (wish, gift) => {
-  // update product data
   Product.update(wish.body, {
     where: {
       id: wish.params.id,
     },
   })
     .then((product) => {
-      // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: wish.params.id } });
     })
     .then((productTags) => {
-      // get list of current tag_ids
       const productTagIds = productTags.map(({ tag_id }) => tag_id);
-      // create filtered list of new tag_ids
       const newProductTags = wish.body.tagIds
         .filter((tag_id) => !productTagIds.includes(tag_id))
         .map((tag_id) => {
@@ -104,12 +87,10 @@ router.put('/:id', (wish, gift) => {
             tag_id,
           };
         });
-      // figure out which ones to remove
       const productTagsToRemove = productTags
         .filter(({ tag_id }) => !wish.body.tagIds.includes(tag_id))
         .map(({ id }) => id);
 
-      // run both actions
       return Promise.all([
         ProductTag.destroy({ where: { id: productTagsToRemove } }),
         ProductTag.bulkCreate(newProductTags),
@@ -117,13 +98,11 @@ router.put('/:id', (wish, gift) => {
     })
     .then((updatedProductTags) => gift.json(updatedProductTags))
     .catch((err) => {
-      // console.log(err);
       gift.status(400).json(err);
     });
 });
 
 router.delete('/:id', async(wish, gift) => {
-  // delete one product by its `id` value
   try{
     const clearanceProduct=await Product.destroy({
       where:{id:wish.params.id}
@@ -137,5 +116,4 @@ router.delete('/:id', async(wish, gift) => {
     gift.status(500).json(internalShrink);
   }
 });
-
 module.exports = router;
