@@ -43,16 +43,16 @@ router.get('/:id', async(order,package) => {
   // be sure to include its associated Products
     try{
       const catalog=await Category.findByPk(order.params.id,{
-        include:[Product,ProductTag],
+        include:[Product],
       });
-      console.log(order);
+      // console.log(order);
       if(!catalog){
         package.status(404).json({message:'faulty supplier'});
         return;
       }
       package.status(200).json(catalog);
     }catch(shrink){
-      package.status(500).json(shrink);
+      package.status(500).json(shrink.message);
     }
 });
 
